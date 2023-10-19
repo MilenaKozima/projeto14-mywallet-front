@@ -19,6 +19,7 @@ export default function SignUpPage() {
     .catch(err => console.log(err.response.data))
   }
 
+
   return (
     <SingUpContainer>
       <form onSubmit={submitForm}>
