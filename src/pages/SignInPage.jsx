@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import MyWalletLogo from "../components/MyWalletLogo"
-import { useState } from "react"
 
 export default function SignInPage() {
 

@@ -1,73 +1,83 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo"
+import { useState } from "react"
+import axios from "axios"
 
 export default function SignUpPage() {
-
-  const [form, setForm] = useState({name: "", email: "", password: "", confirmPass: ""});
+  const [form, setForm] = useState({name:"", email: "", password: "", confirmPassword: ""})
+  const navigate = useNavigate()
 
   function handleForm(e){
-    setForm({...form, [e.target.name]: e.target.value});
+    setForm({...form, [e.target.name]: e.target.value})
   }
 
   function submitForm(e){
     e.preventDefault()
 
-    delete form.confirmPass
-    axios.post(`${process.env.VITE_API_URL}/cadastro`, form)
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err.response.data))
-  }
+    if (form.password !== form.confirmPassword) {
+      alert("As senhas não são iguais")
+      return
+    }
 
+    delete form.confirmPassword
+    axios.post(`${process.env.REACT_APP_API_URL}/cadastro`, form)
+    .then(res => navigate("/"))
+    .catch(err => alert(err.response.data))
+
+  }
 
   return (
     <SingUpContainer>
       <form onSubmit={submitForm}>
         <MyWalletLogo />
         <input 
+        required
         placeholder="Nome" 
         name="name"
-        type="text"
-        required 
         value={form.name}
         onChange={handleForm}
         />
-        <input 
+        <input
+        required 
         placeholder="E-mail" 
         type="email" 
+        autoComplete="username" 
         name="email"
         value={form.email}
         onChange={handleForm}
-        required
         />
         <input 
+        required
+        minLength={3}
+        name="password"
         placeholder="Senha" 
-        required
-        minLength={3}
-        type="password"
-        name="password" 
-        autoComplete="new-password" 
+        type="password" 
+        autoComplete="new-password"
         value={form.password}
-        onChange={handleForm}
+        onChange={handleForm} 
         />
         <input 
-        placeholder="Confirme a senha" 
         required
         minLength={3}
+        name="confirmPassword"
+        placeholder="Confirme a senha" 
         type="password" 
-        autocomplete="new-password" 
-        value={form.confirmPass}
+        autoComplete="new-password" 
+        value={form.confirmPassword}
         onChange={handleForm}
         />
         <button type="submit">Cadastrar</button>
       </form>
 
-      <Link to="/">
+      <Link to="/" >
         Já tem uma conta? Entre agora!
       </Link>
     </SingUpContainer>
   )
 }
+
+
 
 const SingUpContainer = styled.section`
   height: 100vh;
