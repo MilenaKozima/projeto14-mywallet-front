@@ -1,13 +1,23 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
+import { useContext } from "react"
+import AuthContext from "../context/AuthContext"
+import { useKickOut } from "../hooks/useKickOut"
+import { useLogOut } from "../services/auth"
 
 export default function HomePage() {
+
+  const {userName} = useContext(AuthContext)
+  const logout = useLogOut()
+
+  useKickOut()
+
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
-        <BiExit />
+        <h1>Olá, {userName}</h1>
+        <BiExit onClick={logout}/>
       </Header>
 
       <TransactionsContainer>

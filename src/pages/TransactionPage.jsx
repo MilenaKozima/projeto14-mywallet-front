@@ -1,6 +1,10 @@
 import styled from "styled-components"
+import { useKickOut } from "../hooks/useKickOut"
 
 export default function TransactionsPage() {
+
+  useKickOut()
+
   return (
     <TransactionsContainer>
       <h1>Nova TRANSAÇÃO</h1>

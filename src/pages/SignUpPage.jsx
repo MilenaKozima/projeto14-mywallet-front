@@ -1,16 +1,15 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
-import MyWalletLogo from "../components/MyWalletLogo"
-import { useState } from "react"
+import MyWalletLogo from "../components/MyWalletLogo" 
 import axios from "axios"
+import { useGetIn } from "../hooks/useGetIn";
+import useForm from "../hooks/useForm"
+import {useSignUp} from "../services/auth"
 
 export default function SignUpPage() {
-  const [form, setForm] = useState({name:"", email: "", password: "", confirmPassword: ""})
-  const navigate = useNavigate()
-
-  function handleForm(e){
-    setForm({...form, [e.target.name]: e.target.value})
-  }
+  const {form, handleForm} = useForm({name:"", email: "", password: "", confirmPassword: ""})
+  useGetIn()
+  const signUp = useSignUp()
 
   function submitForm(e){
     e.preventDefault()
@@ -21,9 +20,7 @@ export default function SignUpPage() {
     }
 
     delete form.confirmPassword
-    axios.post(`${process.env.REACT_APP_API_URL}/cadastro`, form)
-    .then(res => navigate("/"))
-    .catch(err => alert(err.response.data))
+    signup(form)
 
   }
 
@@ -32,6 +29,7 @@ export default function SignUpPage() {
       <form onSubmit={submitForm}>
         <MyWalletLogo />
         <input 
+        data-test="name"
         required
         placeholder="Nome" 
         name="name"
@@ -39,6 +37,7 @@ export default function SignUpPage() {
         onChange={handleForm}
         />
         <input
+        data-test="email"
         required 
         placeholder="E-mail" 
         type="email" 
@@ -48,6 +47,7 @@ export default function SignUpPage() {
         onChange={handleForm}
         />
         <input 
+        data-test="password"
         required
         minLength={3}
         name="password"
@@ -57,7 +57,8 @@ export default function SignUpPage() {
         value={form.password}
         onChange={handleForm} 
         />
-        <input 
+        <input
+        data-test="conf-password" 
         required
         minLength={3}
         name="confirmPassword"
@@ -67,7 +68,7 @@ export default function SignUpPage() {
         value={form.confirmPassword}
         onChange={handleForm}
         />
-        <button type="submit">Cadastrar</button>
+        <button data-test="sign-up-submit" type="submit">Cadastrar</button>
       </form>
 
       <Link to="/" >

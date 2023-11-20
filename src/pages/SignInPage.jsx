@@ -1,16 +1,47 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link , useNavigate} from "react-router-dom"
 import MyWalletLogo from "../components/MyWalletLogo"
+import { useGetIn } from "../hooks/useGetIn"
+import useForm from "../hooks/useForm"
+import {useSignIn} from "../services/auth"
 
 export default function SignInPage() {
+  const {form, handleForm} = useForm({email: "", password: ""})
+  const signin = useSignIn()
+  useGetIn
+
+  function submitForm(e){
+    e.preventDefault()
+    signin(form)
+
+  }
 
   return (
     <SingInContainer>
-      <form>
+      <form onSubmit={submitForm}> 
         <MyWalletLogo />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autoComplete="new-password" />
-        <button>Entrar</button>
+        <input
+        required 
+        placeholder="E-mail" 
+        type="email" 
+        autoComplete="username" 
+        name="email"
+        value={form.email}
+        onChange={handleForm}
+        data-test="email"
+        />
+        <input 
+        required
+        minLength={3}
+        name="password"
+        placeholder="Senha" 
+        type="password" 
+        autoComplete="new-password"
+        value={form.password}
+        onChange={handleForm}
+        data-test="password" 
+        />
+        <button data-test="sign-in-submit" type="submit">Entrar</button>
       </form>
 
       <Link to="/cadastro">
