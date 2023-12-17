@@ -25,7 +25,7 @@ export function useAddTransaction (){
     const config = { headers: { Authorization: `Bearer ${token}` } }
 
     return (body) => {
-        axios.post(`${process.env.REACT_APP_API_URL}/transactions`, body, config)
+        axios.post(`${import.meta.env.VITE_API_URL}/transactions`, body, config)
         .then(res => navigate("/home"))
         .catch(err => alert(err.response.data))
     }

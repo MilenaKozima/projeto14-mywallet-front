@@ -7,7 +7,7 @@ export function useSignUp() {
     const navigate = useNavigate
 
     return (body) => {
-        axios.post(`${process.env.REACT_APP_API_URL}/cadastro`, body)
+        axios.post(`${import.meta.env.VITE_API_URL}/cadastro`, body)
         .then(res => navigate("/"))
         .catch(err => alert(err.response.data))
     }
@@ -19,7 +19,7 @@ export function useSignIn(){
     const {setToken, setUserName} = useContext(AuthContext)
 
     return (body) => {
-        axios.post(`${process.env.REACT_APP_API_URL}/login`, body)
+        axios.post(`${import.meta.env.VITE_API_URL}/login`, body)
         .then(res =>{
           setToken(res.data.token)
           setUserName(res.data.userName)
@@ -38,7 +38,7 @@ export function useLogOut(){
     const config = {headers: {Authorization: `Bearer ${token}`}}
 
     return () => {
-        axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, config)
+        axios.post(`${import.meta.env.VITE_API_URL}/logout`, {}, config)
         .then(() => {
             setToken(undefined)
             setUserName(undefined)
