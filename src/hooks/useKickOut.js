@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import AuthContext from "../context/AuthContext"
 
-export function useKickOut() {
+export default function useKickOut() {
     const {userName, token} = useContext(AuthContext)
     const navigate = useNavigate()
   

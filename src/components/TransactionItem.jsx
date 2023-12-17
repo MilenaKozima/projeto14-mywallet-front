@@ -8,9 +8,9 @@ export default function TransactionItem ({transaction}){
         <ItemContainer>
         <div>
           <span>{dayjs(date).format("DD/MM")}</span>
-          <strong>{description}</strong>
+          <strong data-teste="registry-name">{description}</strong>
         </div>
-        <Value color={type}>{value.toFixed(2).toString().replace(".", ",")}</Value>
+        <Value data-teste="registry-amount" color={type}>{value.toFixed(2).toString().replace(".", ",")}</Value>
       </ItemContainer>
     )
 }

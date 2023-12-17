@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import AuthContext from "../context/AuthContext"
 
-export function useGetIn() {
+export default function useGetIn() {
     const {userName, token} = useContext(AuthContext)
     const navigate = useNavigate()
   

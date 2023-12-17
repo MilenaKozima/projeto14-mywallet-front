@@ -2,6 +2,7 @@ import { useState } from "react"
 import AuthContext from "../context/AuthContext"
 import axios from "axios"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function useGetTransaction() {
     const [transactions, setTransactions] = useState(undefined)
@@ -15,4 +16,17 @@ export function useGetTransaction() {
     }, [])
 
     return transactions
+}
+
+export function useAddTransaction (){
+    const { token } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const config = { headers: { Authorization: `Bearer ${token}` } }
+
+    return (body) => {
+        axios.post(`${process.env.REACT_APP_API_URL}/transactions`, body, config)
+        .then(res => navigate("/home"))
+        .catch(err => alert(err.response.data))
+    }
 }

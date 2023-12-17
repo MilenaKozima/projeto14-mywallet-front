@@ -3,27 +3,33 @@ import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { useContext } from "react"
 import AuthContext from "../context/AuthContext"
-import { useKickOut } from "../hooks/useKickOut"
+import useKickOut from "../hooks/useKickOut"
 import { useLogOut } from "../services/auth"
 import TransactionItem from "../components/TransactionItem"
-import { useEffect } from "react"
-import { useState } from "react"
-
 import { Oval } from "react-loader-spinner"
 import { useGetTransaction } from "../services/transactions"
+import { useNavigate } from "react-router-dom"
 
 export default function HomePage() {
 
   const { userName } = useContext(AuthContext)
+  const navigate = useNavigate()
   const logout = useLogOut()
   const transactions = useGetTransaction()
 
   useKickOut()
 
+  function calcBalance(){
+    const sum = transactions.reduce((acc, cur) => cur.type === "income" ? acc + cur.value : acc - cur.value, 0) 
+    return sum.toFixed(2)
+  }
+
+  const balance = transactions && calcBalance()
+
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, {userName}</h1>
+        <h1 data-test="user-name">Olá, {userName}</h1>
         <BiExit data-test="logout" onClick={logout} />
       </Header>
 
@@ -37,7 +43,7 @@ export default function HomePage() {
           </ul>
           <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value data-test="total-amount" color={balance > 0 ? "positivo" : "negativo"}>{balance.toString().replace(".", ",")}</Value>
         </article>
           </ListContainer>
         )}
@@ -46,11 +52,11 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button>
+        <button data-test="new-income" onClick={() => navigate("/nova-transacao/entrada")}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
         </button>
-        <button>
+        <button data-test="new-expense" onClick={() => navigate("/nova-transacao/saida")}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>

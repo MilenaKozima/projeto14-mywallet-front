@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo" 
 import axios from "axios"
-import { useGetIn } from "../hooks/useGetIn";
+import  useGetIn from "../hooks/useGetIn";
 import useForm from "../hooks/useForm"
 import {useSignUp} from "../services/auth"
 
@@ -20,7 +20,7 @@ export default function SignUpPage() {
     }
 
     delete form.confirmPassword
-    signup(form)
+    signUp(form)
 
   }
 
