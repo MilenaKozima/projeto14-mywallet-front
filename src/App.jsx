@@ -7,6 +7,7 @@ import TransactionsPage from "./pages/TransactionPage"
 import { useState } from "react"
 import AuthContext from "./context/AuthContext"
 
+
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [userName, setUserName] = useState(localStorage.getItem("userName"))

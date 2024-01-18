@@ -68,7 +68,9 @@ export default function SignUpPage() {
         value={form.confirmPassword}
         onChange={handleForm}
         />
+        <Link to="/">
         <button data-test="sign-up-submit" type="submit">Cadastrar</button>
+        </Link>
       </form>
 
       <Link to="/" >
