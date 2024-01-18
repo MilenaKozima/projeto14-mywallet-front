@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 export function useSignUp() {
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
     return (body) => {
         axios.post(`${import.meta.env.VITE_API_URL}/cadastro`, body)
