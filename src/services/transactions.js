@@ -11,7 +11,7 @@ export function useGetTransaction() {
 
     const config = { headers: { Authorization: `Bearer ${token}` } }
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_API_URL}/transactions`, config)
+        axios.get(`${import.meta.env.VITE_API_URL}/transaction`, config)
             .then(res => setTransactions(res.data))
             .catch(err => alert(err.response.data))
     }, [])
@@ -26,7 +26,7 @@ export function useAddTransaction (){
     const config = { headers: { Authorization: `Bearer ${token}` } }
 
     return (body) => {
-        axios.post(`${import.meta.env.VITE_API_URL}/transactions`, body, config)
+        axios.post(`${import.meta.env.VITE_API_URL}/transaction`, body, config)
         .then(res => navigate("/home"))
         .catch(err => alert(err.response.data))
     }
